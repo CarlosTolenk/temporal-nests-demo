@@ -11,7 +11,7 @@ import type { ActivitiesService } from '../activities/activities.service';
 import {
   getExchangeRatesQuery,
   ExchangeRates,
-} from '../../../../libs/shared/src';
+} from '../../../../../libs/shared/src';
 
 const { getExchangeRates } = proxyActivities<ActivitiesService>({
   startToCloseTimeout: '1 minute',

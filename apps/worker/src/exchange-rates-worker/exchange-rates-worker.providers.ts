@@ -2,7 +2,7 @@ import { Provider } from '@nestjs/common';
 import { Worker } from '@temporalio/worker';
 
 import { taskQueue } from '@app/shared';
-import { ActivitiesService } from '../activities/activities.service';
+import { ActivitiesService } from './activities/activities.service';
 
 export const exchangeRatesWorkerProviders: Provider[] = [
   {
@@ -15,13 +15,13 @@ export const exchangeRatesWorkerProviders: Provider[] = [
       };
 
       const worker = await Worker.create({
-        workflowsPath: require.resolve('../temporal/workflows'),
+        workflowsPath: require.resolve('./temporal/workflows'),
         taskQueue,
         activities,
       });
 
-      await worker.run();
-      console.log('Started worker!');
+      worker.run();
+      console.log('Started worker EXCHANGE_RATES_WORKER!');
 
       return worker;
     },

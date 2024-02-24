@@ -8,7 +8,7 @@ import {
 
 import { taskQueue, taskQueueOther } from '@app/shared';
 
-export const exchangeRatesProviders: Provider[] = [
+export const sharedTemporalProviders: Provider[] = [
   {
     provide: 'CONNECTION_CONFIG',
     useValue: {

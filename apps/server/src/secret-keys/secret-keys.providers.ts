@@ -6,9 +6,9 @@ import {
   WorkflowExecutionAlreadyStartedError,
 } from '@temporalio/client';
 
-import { taskQueue, taskQueueOther } from '@app/shared';
+import { taskQueueOther } from '@app/shared';
 
-export const exchangeRatesProviders: Provider[] = [
+export const secretKeysProviders: Provider[] = [
   {
     provide: 'CONNECTION_CONFIG',
     useValue: {
@@ -28,29 +28,6 @@ export const exchangeRatesProviders: Provider[] = [
       return new Client({ connection });
     },
     inject: ['CONNECTION'],
-  },
-  {
-    provide: 'EXCHANGE_RATES_WORKFLOW_HANDLE',
-    useFactory: async (client: Client) => {
-      let handle;
-      try {
-        handle = await client.workflow.start('exchangeRatesWorkflow', {
-          taskQueue,
-          workflowId: 'exchange-rates',
-        });
-        console.log('Started new exchange rates workflow');
-      } catch (err) {
-        if (err instanceof WorkflowExecutionAlreadyStartedError) {
-          console.log('Reusing existing exchange rates workflow');
-          handle = client.workflow.getHandle('exchange-rates');
-        } else {
-          throw err;
-        }
-      }
-
-      return handle;
-    },
-    inject: ['WORKFLOW_CLIENT'],
   },
   {
     provide: 'SECRET_KEYS_WORKFLOW_HANDLE',

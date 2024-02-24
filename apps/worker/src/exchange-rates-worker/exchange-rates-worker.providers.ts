@@ -20,7 +20,7 @@ export const exchangeRatesWorkerProviders: Provider[] = [
         activities,
       });
 
-      worker.run();
+      await worker.run();
       console.log('Started worker!');
 
       return worker;

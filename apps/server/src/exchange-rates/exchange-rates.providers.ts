@@ -1,12 +1,14 @@
+import { Provider } from '@nestjs/common';
 import {
   Client,
   Connection,
   ConnectionOptions,
   WorkflowExecutionAlreadyStartedError,
 } from '@temporalio/client';
+
 import { taskQueue } from '@app/shared';
 
-export const exchangeRatesProviders = [
+export const exchangeRatesProviders: Provider[] = [
   {
     provide: 'CONNECTION_CONFIG',
     useValue: {
@@ -40,7 +42,7 @@ export const exchangeRatesProviders = [
       } catch (err) {
         if (err instanceof WorkflowExecutionAlreadyStartedError) {
           console.log('Reusing existing exchange rates workflow');
-          handle = await client.workflow.getHandle('exchange-rates');
+          handle = client.workflow.getHandle('exchange-rates');
         } else {
           throw err;
         }

@@ -12,8 +12,6 @@ describe('ExchangeRatesService', () => {
     };
 
     app = await Test.createTestingModule({
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       providers: [...exchangeRatesProviders, ExchangeRatesService],
     })
       .overrideProvider('CONNECTION')

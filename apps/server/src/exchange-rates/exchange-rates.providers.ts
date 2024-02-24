@@ -5,7 +5,6 @@ import {
   ConnectionOptions,
   WorkflowExecutionAlreadyStartedError,
 } from '@temporalio/client';
-import { v4 as uuid4 } from 'uuid';
 
 import { taskQueue } from '@app/shared';
 
@@ -37,7 +36,7 @@ export const exchangeRatesProviders: Provider[] = [
       try {
         handle = await client.workflow.start('exchangeRatesWorkflow', {
           taskQueue,
-          workflowId: uuid4(),
+          workflowId: 'exchange-rates',
         });
         console.log('Started new exchange rates workflow');
       } catch (err) {

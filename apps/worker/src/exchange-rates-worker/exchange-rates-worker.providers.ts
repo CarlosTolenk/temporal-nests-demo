@@ -14,16 +14,20 @@ export const exchangeRatesWorkerProviders: Provider[] = [
           activitiesService.getExchangeRates.bind(activitiesService),
       };
 
-      const worker = await Worker.create({
-        workflowsPath: require.resolve('../temporal/workflows'),
-        taskQueue,
-        activities,
-      });
+      const workers = await Promise.all([
+        Worker.create({
+          workflowsPath: require.resolve('../temporal/workflows'),
+          taskQueue,
+          activities,
+        }),
+      ]);
 
-      await worker.run();
-      console.log('Started worker!');
+      const workersReady = await Promise.all(
+        workers.map((worker) => worker.run()),
+      );
+      console.log('Started workers!');
 
-      return worker;
+      return workersReady;
     },
   },
 ];
